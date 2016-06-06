@@ -8,11 +8,10 @@ import "strconv"
 
 // Command.
 var Update = cli.Command{
-	Name:        "update",
-	ShortName:   "up",
-	Usage:       "<database> [revision]",
-	Description:
-`Update the database to a particular revision.
+	Name:      "update",
+	ShortName: "up",
+	Usage:     "<database> [revision]",
+	Description: `Update the database to a particular revision.
 
 ARGUMENTS:
     database
@@ -28,21 +27,22 @@ EXAMPLE:
     snap update my_database 10
 `,
 
-	Action: func(ctx *cli.Context) {
+	Action: func(ctx *cli.Context) error {
 		args := ctx.Args()
 
 		if len(args) > 0 {
 			database := args.Get(0)
-			// Ignore the error when getting the second argument because if the 
-			// argument can not be parsed to a uint64 then (along with the 
-			// error) zero is returned, which is what we want because we can 
+			// Ignore the error when getting the second argument because if the
+			// argument can not be parsed to a uint64 then (along with the
+			// error) zero is returned, which is what we want because we can
 			// use it as an empty value.
 			revision, _ := strconv.ParseUint(args.Get(1), 10, 64)
 			action.UpdateSchemaToRevision(database, revision)
-			return
+			return nil
 		}
 
 		log.Println("No database name specified.")
 		log.Fatalf("Run '%s help update' for more information.\n", ctx.App.Name)
+		return nil
 	},
 }

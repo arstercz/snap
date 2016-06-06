@@ -7,11 +7,10 @@ import "log"
 
 // Command.
 var Commit = cli.Command{
-	Name:        "commit",
-	ShortName:   "ci",
-	Usage:       "<database> <snapfile> <message>",
-	Description:
-`Commit a new schema revision to a managed database. A schema revision is 
+	Name:      "commit",
+	ShortName: "ci",
+	Usage:     "<database> <snapfile> <message>",
+	Description: `Commit a new schema revision to a managed database. A schema revision is 
 defined within a snap file which follows the format described below. This file 
 is then applied to the database.
 
@@ -51,18 +50,19 @@ EXAMPLE:
     snap my_database changes.txt "Added table foo."
 	`,
 
-	Action: func(ctx *cli.Context) {
+	Action: func(ctx *cli.Context) error {
 		args := ctx.Args()
 
 		if len(args) > 2 {
 			database := args.Get(0)
 			fileName := args.Get(1)
-			message  := args.Get(2)
+			message := args.Get(2)
 			action.CommitFile(database, fileName, message)
-			return
+			return nil
 		}
 
 		log.Println("Not enough arguments supplied.")
 		log.Fatalf("Run '%s help commit' for more information.\n", ctx.App.Name)
+		return nil
 	},
 }

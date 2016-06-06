@@ -7,10 +7,9 @@ import "log"
 
 // Command.
 var Log = cli.Command{
-	Name:        "log",
-	Usage:       "<database>",
-	Description:
-`Display a log of all schema update commits.
+	Name:  "log",
+	Usage: "<database>",
+	Description: `Display a log of all schema update commits.
 
 ARGUMENTS:
     database
@@ -21,16 +20,17 @@ EXAMPLE:
     snap log my_database
 `,
 
-	Action: func(ctx *cli.Context) {
+	Action: func(ctx *cli.Context) error {
 
 		args := ctx.Args()
 
 		if len(args) > 0 {
 			action.ShowLog(args.First())
-			return
+			return nil
 		}
 
 		log.Println("No database name specified.")
 		log.Fatalf("Run '%s help log' for more information.\n", ctx.App.Name)
+		return nil
 	},
 }

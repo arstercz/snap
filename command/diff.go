@@ -7,10 +7,9 @@ import "log"
 
 // Command.
 var Diff = cli.Command{
-	Name:       "diff",
-	Usage:      "<database> <from-revision>[..<to-revision>]",
-	Description:
-`Show an SQL diff between two schema revisions. The diff will be in unified 
+	Name:  "diff",
+	Usage: "<database> <from-revision>[..<to-revision>]",
+	Description: `Show an SQL diff between two schema revisions. The diff will be in unified 
 format and be written to stdout.
 
 ARGUMENTS:
@@ -32,17 +31,18 @@ EXAMPLE:
 	snap diff my_database 10..12
 `,
 
-	Action: func(ctx *cli.Context) {
+	Action: func(ctx *cli.Context) error {
 		args := ctx.Args()
 
 		if len(args) > 1 {
-			database       := args.Get(0)
+			database := args.Get(0)
 			revisionString := args.Get(1)
 			action.Diff(database, revisionString)
-			return
+			return nil
 		}
 
 		log.Println("Both database and a revision must be specified.")
 		log.Fatalf("Run '%s help diff' for more information.\n", ctx.App.Name)
+		return nil
 	},
 }

@@ -8,10 +8,9 @@ import "strconv"
 
 // Command.
 var Dump = cli.Command{
-	Name:        "dump",
-	Usage:       "<database> [revision]",
-	Description:
-`Dump a managed database schema to stdout.
+	Name:  "dump",
+	Usage: "<database> [revision]",
+	Description: `Dump a managed database schema to stdout.
 
 ARGUMENTS:
     database
@@ -26,21 +25,22 @@ EXAMPLE:
     snap dump my_database 10
 `,
 
-	Action: func(ctx *cli.Context) {
+	Action: func(ctx *cli.Context) error {
 		args := ctx.Args()
 
 		if len(args) > 0 {
 			database := args.Get(0)
-			// Ignore the error when getting the second argument because if the 
-			// argument can not be parsed to a uint64 then (along with the 
-			// error) zero is returned, which is what we want because we can 
+			// Ignore the error when getting the second argument because if the
+			// argument can not be parsed to a uint64 then (along with the
+			// error) zero is returned, which is what we want because we can
 			// use it as an empty value.
 			revision, _ := strconv.ParseUint(args.Get(1), 10, 64)
 			action.ShowFullSql(database, revision)
-			return
+			return nil
 		}
 
 		log.Println("No database name specified.")
 		log.Fatalf("Run '%s help dump' for more information.\n", ctx.App.Name)
+		return nil
 	},
 }

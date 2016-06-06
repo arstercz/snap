@@ -1,7 +1,7 @@
-// Snap is a proof of concept tool to start exploring version control for 
-// database schemas. Usually when maintaining and updating database schemas 
-// over multiple environments things start to get confusing very quickly. Snap 
-// is a tool inspired by git allowing you to manage and interrogate snap 
+// Snap is a proof of concept tool to start exploring version control for
+// database schemas. Usually when maintaining and updating database schemas
+// over multiple environments things start to get confusing very quickly. Snap
+// is a tool inspired by git allowing you to manage and interrogate snap
 // managed databases.
 package main
 
@@ -17,12 +17,12 @@ func main() {
 
 	app := cli.NewApp()
 
-	app.Name        = "snap"
-	app.Version     = "0.1a"
-	app.Usage       = "Version control for MySql database schemas"
-	app.Author      = "Gary Willoughby"
-	app.Email       = "snap@nomad.so"
-	app.HideHelp    = true
+	app.Name = "snap"
+	app.Version = "0.1a"
+	app.Usage = "Version control for MySql database schemas"
+	app.Author = "Gary Willoughby"
+	app.Email = "snap@nomad.so"
+	app.HideHelp = true
 	app.HideVersion = true
 
 	app.Commands = []cli.Command{
@@ -39,8 +39,9 @@ func main() {
 		command.Version,
 	}
 
-	app.Action = func(ctx *cli.Context) {
+	app.Action = func(ctx *cli.Context) error {
 		cli.ShowAppHelp(ctx)
+		return nil
 	}
 
 	database.Open(config.GetConfig())

@@ -8,11 +8,10 @@ import "strconv"
 
 // Command.
 var Copy = cli.Command{
-	Name:        "copy",
-	ShortName:   "cp",
-	Usage:       "<source-database> <destination-database> [revision]",
-	Description:
-`Copy a database schema to a new database.
+	Name:      "copy",
+	ShortName: "cp",
+	Usage:     "<source-database> <destination-database> [revision]",
+	Description: `Copy a database schema to a new database.
 
 ARGUMENTS:
     source-database
@@ -32,22 +31,23 @@ EXAMPLE:
     snap copy my_database my_new_database 12
 	`,
 
-	Action: func(ctx *cli.Context) {
+	Action: func(ctx *cli.Context) error {
 		args := ctx.Args()
 
 		if len(args) > 1 {
-			source      := args.Get(0)
+			source := args.Get(0)
 			destination := args.Get(1)
-			// Ignore the error when getting the third argument because if the 
-			// argument can not be parsed to a uint64 then (along with the 
-			// error) zero is returned, which is what we want because we can 
+			// Ignore the error when getting the third argument because if the
+			// argument can not be parsed to a uint64 then (along with the
+			// error) zero is returned, which is what we want because we can
 			// use it as an empty value.
 			revision, _ := strconv.ParseUint(args.Get(2), 10, 64)
 			action.CopyDatabase(source, destination, revision)
-			return
+			return nil
 		}
 
 		log.Println("Both source and destination databases must be specified.")
 		log.Fatalf("Run '%s help copy' for more information.\n", ctx.App.Name)
+		return nil
 	},
 }

@@ -5,10 +5,9 @@ import "github.com/codegangsta/cli"
 
 // Command.
 var Help = cli.Command{
-	Name:        "help",
-	Usage:       "[command]",
-	Description:
-`Shows a list of commands or extended help for one command.
+	Name:  "help",
+	Usage: "[command]",
+	Description: `Shows a list of commands or extended help for one command.
 
 ARGUMENTS:
     command (optional)
@@ -19,13 +18,14 @@ EXAMPLE:
     snap help commit
 `,
 
-	Action: func(ctx *cli.Context) {
+	Action: func(ctx *cli.Context) error {
 		args := ctx.Args()
 		if args.Present() {
 			cli.ShowCommandHelp(ctx, args.First())
 		} else {
 			cli.ShowAppHelp(ctx)
 		}
+		return nil
 	},
 }
 

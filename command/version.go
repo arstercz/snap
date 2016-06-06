@@ -6,17 +6,17 @@ import "github.com/codegangsta/cli"
 
 // Command.
 var Version = cli.Command{
-	Name:        "version",
-	Usage:       "",
-	Description:
-`Displays version information about the executable.
+	Name:  "version",
+	Usage: "",
+	Description: `Displays version information about the executable.
 
 EXAMPLE:
 
     snap version
 `,
 
-	Action: func(ctx *cli.Context) {
+	Action: func(ctx *cli.Context) error {
 		fmt.Println(ctx.App.Name, ctx.App.Version)
+		return nil
 	},
 }

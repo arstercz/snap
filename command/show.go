@@ -8,10 +8,9 @@ import "strconv"
 
 // Command.
 var Show = cli.Command{
-	Name:        "show",
-	Usage:       "<database> [revision]",
-	Description:
-`Show the update SQL for a particular revision. This is the SQL that appeared 
+	Name:  "show",
+	Usage: "<database> [revision]",
+	Description: `Show the update SQL for a particular revision. This is the SQL that appeared 
 in the original snap file within the UP section.
 
 ARGUMENTS:
@@ -27,22 +26,23 @@ EXAMPLE:
     snap show my_database 10
 `,
 
-	Action: func(ctx *cli.Context) {
+	Action: func(ctx *cli.Context) error {
 
 		args := ctx.Args()
 
 		if len(args) > 0 {
 			database := args.Get(0)
-			// Ignore the error when getting the second argument because if the 
-			// argument can not be parsed to a uint64 then (along with the 
-			// error) zero is returned, which is what we want because we can 
+			// Ignore the error when getting the second argument because if the
+			// argument can not be parsed to a uint64 then (along with the
+			// error) zero is returned, which is what we want because we can
 			// use it as an empty value.
 			revision, _ := strconv.ParseUint(args.Get(1), 10, 64)
 			action.ShowUpdateSql(database, revision)
-			return
+			return nil
 		}
 
 		log.Println("No database name specified.")
 		log.Fatalf("Run '%s help show' for more information.\n", ctx.App.Name)
+		return nil
 	},
 }

@@ -7,10 +7,9 @@ import "log"
 
 // Command.
 var Init = cli.Command{
-	Name:        "init",
-	Usage:       "<database>",
-	Description:
-`Initialise a database to be managed.
+	Name:  "init",
+	Usage: "<database>",
+	Description: `Initialise a database to be managed.
 
 ARGUMENTS:
     database
@@ -21,17 +20,18 @@ EXAMPLE:
     snap init my_database
 `,
 
-	Action: func(ctx *cli.Context) {
+	Action: func(ctx *cli.Context) error {
 
 		args := ctx.Args()
 
 		if len(args) > 0 {
 			name := args.First()
 			action.InitialiseDatabase(name)
-			return
+			return nil
 		}
 
 		log.Println("No database name specified.")
 		log.Fatalf("Run '%s help init' for more information.\n", ctx.App.Name)
+		return nil
 	},
 }
