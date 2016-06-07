@@ -7,7 +7,7 @@ package main
 
 // Imports.
 import "github.com/codegangsta/cli"
-import "github.com/nomad-software/snap/command"
+import "github.com/chenzhe07/snap/command"
 import "github.com/nomad-software/snap/config"
 import "github.com/nomad-software/snap/database"
 import "os"
@@ -36,6 +36,7 @@ func main() {
 		command.Log,
 		command.Show,
 		command.Update,
+		command.Clear,
 		command.Version,
 	}
 
