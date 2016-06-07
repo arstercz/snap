@@ -64,6 +64,7 @@ documentation see snap's built-in help.
 | log     | Show a log of changes to a database schema. |
 | show    | Show the changes made at a specified schema revision. |
 | update  | Update a database schema to any previously commit change. |
+| clear   | lear specified database's all revision. |
 | version | Show version information. |
 
 ## Built-in help
